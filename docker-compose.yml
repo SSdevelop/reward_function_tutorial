@@ -1,0 +1,35 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:latest
+    depends_on:
+      - auth
+      - tutorial
+    ports:
+      - 8083:80
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/site.conf:/etc/nginx/conf.d/default.conf
+      - auth:/var/www/auth
+      - tutorial:/var/www/tutorial
+  
+  auth:
+    container_name: authentication_ui
+    build:
+      context: authentication-ui
+      dockerfile: Dockerfile
+    volumes:
+      - auth:/app/build
+
+  tutorial:
+    container_name: reward_tutorial
+    build:
+      context: reward_tutorial
+      dockerfile: Dockerfile
+    volumes:
+      - tutorial:/app/dist
+  
+volumes:
+  auth:
+  tutorial:
