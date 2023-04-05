@@ -2,27 +2,47 @@
 import { AppBar, Button, Card, CardActionArea, CardContent, Grid, IconButton, Toolbar, Typography } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { isLoggedIn, logOut } from './helper/helper';
 
 
 function App() {
   const tutorial_list = [
     'Tutorial1: basics', 
-    'Tutorial2: Intermediate1', 
-    'Tutorial3: Intermediate2', 
-    'Tutorial4: Advanced1',
-    'Tutorial5: Advanced2',
+    'Tutorial2: Intermediate1',
     'Free Play'
   ];
 
   const navigate = useNavigate();
 
+  // const [auth, setAuth] = useState(false);
+
+  useEffect(() => {
+    isLoggedIn().then(res => {
+      if(!res){
+        window.location.href = "http://localhost:8083/auth/login";
+      }
+    }).catch(err => {
+      console.log(err);
+    });
+  }, []);
+
+  const handleLogOut = () => {
+    logOut().then(res => window.location.href = "http://localhost:8083/auth/login").catch(err => console.log(err));
+    
+  };
+
+  // if(!auth){
+  //   window.location.href = "http://localhost:8083/auth/login";
+  //   return;
+  // };
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <AppBar position="static" sx={{margin: 0}}>
           <Toolbar>
             <Typography varient="h6" component="div" sx={{ flexGrow: 1, mr: 2 }}>Home</Typography>
-            {/* <Button color="inherit" onClick={showCode}>Show Code</Button> */}
+            <Button color="inherit" onClick={handleLogOut}>Log Out</Button>
             {/* <CodeDialogue handleClose={handleClose} open={open} tutorial="tutorial1" /> */}
             <IconButton
                 size="large"

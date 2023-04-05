@@ -16,6 +16,7 @@ import {
 import { LoadingButton } from "@mui/lab";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
+import { logIn } from "../helper";
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -49,13 +50,12 @@ const LoginForm = ({ setAuth }) => {
       remember: true,
     },
     validationSchema: LoginSchema,
-    onSubmit: () => {
-      console.log("submitting...");
-      setTimeout(() => {
-        console.log("submited!!");
-        setAuth(true);
-        navigate(from, { replace: true });
-      }, 2000);
+    onSubmit: async () => {
+      const logInStatus = await logIn(formik.values.email, formik.values.password);
+      if (logInStatus) {
+        setAuth(prev => true);
+        window.location.href = 'http://localhost:8083/tutorial/';
+      }
     },
   });
 

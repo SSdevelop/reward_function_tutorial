@@ -12,6 +12,7 @@ import {
 import { LoadingButton } from "@mui/lab";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
+import { register } from "../helper";
 
 /////////////////////////////////////////////////////////////
 let easing = [0.6, -0.05, 0.01, 0.99];
@@ -31,14 +32,9 @@ const SignupForm = ({ setAuth }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const SignupSchema = Yup.object().shape({
-    firstName: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("First name required"),
-    lastName: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Last name required"),
+    user_role: Yup.string()
+      .oneOf(["student", "teacher"], "Invalid user role")
+      .required("Enter either `student` or `teacher` "),
     email: Yup.string()
       .email("Email must be a valid email address")
       .required("Email is required"),
@@ -47,17 +43,20 @@ const SignupForm = ({ setAuth }) => {
 
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
+      user_role: "",
       email: "",
       password: "",
     },
     validationSchema: SignupSchema,
-    onSubmit: () => {
-      setTimeout(() => {
-        setAuth(true);
-        navigate("/", { replace: true });
-      }, 2000);
+    onSubmit: async () => {
+      const signUpStatus = await register(formik.values.email, formik.values.password, formik.values.user_role);
+      if (signUpStatus) {
+        setAuth(prev => true);
+        window.location.href = 'http://localhost:8083/tutorial/';
+      }
+      else {
+        alert('Cannot sign up');
+      }
     },
   });
 
@@ -76,18 +75,10 @@ const SignupForm = ({ setAuth }) => {
           >
             <TextField
               fullWidth
-              label="First name"
-              {...getFieldProps("firstName")}
-              error={Boolean(touched.firstName && errors.firstName)}
-              helperText={touched.firstName && errors.firstName}
-            />
-
-            <TextField
-              fullWidth
-              label="Last name"
-              {...getFieldProps("lastName")}
-              error={Boolean(touched.lastName && errors.lastName)}
-              helperText={touched.lastName && errors.lastName}
+              label="User Role"
+              {...getFieldProps("user_role")}
+              error={Boolean(touched.user_role && errors.user_role)}
+              helperText={touched.user_role && errors.user_role}
             />
           </Stack>
 

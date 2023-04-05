@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const downloadCode = (tutorial) => {
     const code = sessionStorage.getItem(`${tutorial}_code`);
     let textFileAsBlob = new Blob([code], {type:'text/plain'});
@@ -30,5 +32,31 @@ export const copyCode = async (tutorial) => {
     }
     catch (err){
         alert("Failed to copy code to clipboard!");
+    }
+};
+
+export const isLoggedIn = async () => {
+    try {
+        const res = await axios.get('http://localhost:8083/api/auth/me');
+        if(res.status === 200){
+            return true;
+        }
+        return false;
+    }
+    catch (err){
+        return false;
+    }
+};
+
+export const logOut = async () => {
+    try {
+        const res = await axios.post('http://localhost:8083/api/auth/logout');
+        if(res.status === 200){
+            return true;
+        }
+        return false;
+    }
+    catch (err){
+        return false;
     }
 };

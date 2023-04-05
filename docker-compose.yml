@@ -30,6 +30,40 @@ services:
     volumes:
       - tutorial:/app/dist
   
+  authentication_server_db:
+    container_name: authentication_server_db
+    image: mysql
+    restart: on-failure
+    environment:
+      - MYSQL_ROOT_PASSWORD=authroot
+    volumes:
+      - ./authentication-server/db:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+  
+  auth-server:
+    container_name: auth-server
+    depends_on:
+      - authentication_server_db
+      - redis
+    restart: on-failure
+    build:
+      context: authentication-server
+      dockerfile: Dockerfile
+    ports:
+      - 9000:9000
+    environment:
+      - SECRET_KEY=secret
+      - MYSQL_PASSWORD=authroot
+  
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+  
 volumes:
   auth:
   tutorial:

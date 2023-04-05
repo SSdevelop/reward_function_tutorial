@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AppBar,
   Button,
@@ -12,11 +12,22 @@ import Tutorial1 from "../components/tutorial1/Tutorial1";
 import BlocklySpace from "../components/BlocklySpace";
 import CodeDialogue from "../components/CodeDialogue";
 import { tutorial1_toolbox } from "../assets/toolbox";
+import { isLoggedIn } from "../helper/helper";
 
 function Tutorial1Page() {
   const [xml, setXml] = useState("");
   const [pythonCode, setPythonCode] = useState("");
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    isLoggedIn().then(res => {
+      if(!res){
+        window.location.href = "http://localhost:8083/auth/login";
+      }
+    }).catch(err => {
+      console.log(err);
+    });
+  }, []);
 
   const showCode = () => {
     setOpen(true);

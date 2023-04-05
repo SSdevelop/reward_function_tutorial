@@ -25,7 +25,7 @@ const router = createBrowserRouter([
     errorElement: <Error />
   },
   {
-    path: '/tutorial6',
+    path: '/tutorial3',
     element: <FreePlay />,
     errorElement: <Error />
   }
