@@ -1,11 +1,16 @@
 // import * as Blockly from 'blockly';
 import { pythonGenerator } from 'blockly/python.js';
+import { getBlocks } from './customblocks';
 
 pythonGenerator["reward_function"] = function(block) {
+    let blocks = getBlocks();
     var statements_code = pythonGenerator.statementToCode(block, "code");
-    // TODO: Assemble Python into code variable.
+    if (blocks.includes("get_track_direction")) {
+        var code = "import math\ndef reward_function(params):\n" + statements_code + "\n  return float(reward)\n";
+        return code;
+    }
     var code =
-      "def reward_function(params):\n" + statements_code + "\n  return float(reward)\n";
+      "\ndef reward_function(params):\n" + statements_code + "\n  return float(reward)\n";
     return code;
 };
 
@@ -14,6 +19,11 @@ pythonGenerator["reward"] = function (block) {
     // TODO: Assemble Python into code variable.
     var code = "reward = " + value_reward + "\n";
     return code;
+};
+
+pythonGenerator[`reward_access`] = function (block) {
+    var code = `reward`;
+    return [code, pythonGenerator.ORDER_NONE];
 };
 
 const parameters = [
@@ -25,7 +35,9 @@ const parameters = [
     "steering_angle",
     "heading",
     "crashed",
-    "track_width"
+    "track_width",
+    "waypoints",
+    "closest_waypoints",
 ];
 parameters.forEach((parameter) => {
     pythonGenerator[`${parameter}_init`] = function (block) {
@@ -45,19 +57,19 @@ parameters.forEach((parameter) => {
 
 pythonGenerator["wheels_on_track_check"] = function (block) {
     // TODO: Assemble JavaScript into code variable.
-    var code = "if not all_wheels_on_track:\n  reward = 0.0001\n";
+    var code = "all_wheels_on_track = params[\"all_wheels_on_track\"]\nif not all_wheels_on_track:\n  reward = 0.0001\n";
     return code;
 };
 
 pythonGenerator['check_speed'] = function(block) {
     let number_speed = block.getFieldValue('SPEED');
     // TODO: Assemble Python into code variable.
-    let code = `SPEED_THRESHOLD = ${number_speed}\nif speed < SPEED_THRESHOLD:\n  reward = 0.0001\n`;
+    let code = `speed = params["speed"]\nSPEED_THRESHOLD = ${number_speed}\nif speed < SPEED_THRESHOLD:\n  reward = 0.0001\n`;
     return code;
   };
 
 pythonGenerator['markers_init'] = function(block) {
-    var code = 'marker1 = 0.1 * track_width\nmarker2 = 0.25 * track_width\nmarker3 = 0.5 * track_width\n';
+    var code = 'track_width = params[\"track_width\"]\nmarker1 = 0.1 * track_width\nmarker2 = 0.25 * track_width\nmarker3 = 0.5 * track_width\ndistance_from_center = params[\"distance_from_center\"]\n';
     return code;
 };
 
@@ -85,7 +97,28 @@ for(let i = 0; i < 3; i++) {
 
 pythonGenerator['check_steering'] = function(block) {
     let number_angle = block.getFieldValue('ANGLE');
-    let code = `STEERING_ANGLE_THRESHOLD = ${number_angle}\nif steering_angle > STEERING_ANGLE_THRESHOLD:\n  reward *= 0.8\n`;
+    let code = `steering_angle = abs(params[\"steering_angle\"])\nSTEERING_ANGLE_THRESHOLD = ${number_angle}\nif steering_angle > STEERING_ANGLE_THRESHOLD:\n  reward *= 0.8\n`;
+    return code;
+}
+
+pythonGenerator['get_points'] = function(block) {
+    let code = 'prev_point = waypoints[closest_waypoints[0]]\nnext_point = waypoints[closest_waypoints[1]]\n';
+    return code;
+}
+
+pythonGenerator['get_waypoints_at'] = function(block) {
+    let index = block.getFieldValue('INDEX');
+    let code = `waypoints[${index}]`;
+    return [code, pythonGenerator.ORDER_NONE];
+}
+
+pythonGenerator['get_track_direction'] = function(block) {
+    let code = 'track_direction = math.atan2(next_point[1] - prev_point[1], next_point[0] - prev_point[0])\ntrack_direction = math.degrees(track_direction)\n';
+    return code;
+}
+
+pythonGenerator['check_heading'] = function(block) {
+    let code = `heading = params['heading']\nheading_difference = abs(track_direction - heading)\nif heading_diffence > 180:\n  heading_diffence = 360 - heading_diffence\nHEADING_THRESHOLD = 10.0\nif heading_difference > HEADING_THRESHOLD:\n  reward *= 0.5\n`;
     return code;
 }
 

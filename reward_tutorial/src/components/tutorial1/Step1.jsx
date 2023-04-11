@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import video from "../../assets/videos/tut1_step1.mov";
+import video from "../../assets/videos/tut1_step1.mp4";
 
 const Step1 = () => {
   return (
@@ -18,26 +18,16 @@ const Step1 = () => {
         bad and 1 means the action is good. <br />
         <br />
         Before we learn about this reward function, let us set up our code. by
-        following these<i>basic steps:</i>
+        following these <i>basic steps:</i>
         <ul>
           <li>
             <i>Declare the variables you will use in the reward function.</i>
             <br />
             <p>
               Even though not always required, it is a good practice to always
-              declare the variables you will use. In the code it is a statement
-              like: <br />
-              <code
-                style={{
-                  backgroundColor: "#f0ead6",
-                  borderRadius: "10%",
-                  padding: "10px",
-                  margin: "5px",
-                }}
-              >
-                var x = 0;
-              </code>
-              <br />
+              declare the variables you will use. Declaring simply means that
+              you are telling the computer that you are going to use something
+              later. <br />
               Here, we are declaring a variable{" "}
               <span
                 style={{
@@ -46,11 +36,11 @@ const Step1 = () => {
                   padding: "10px",
                 }}
               >
-                x
+                reward
               </span>
               and setting its value to 0. We can later utilize it, change it, or
               even display it. <br />
-              For this tutorial, we are going to use two variables:
+              For this step, we are going to use {" "}
               <span
                 style={{
                   backgroundColor: "#f0ead6",
@@ -58,39 +48,17 @@ const Step1 = () => {
                   padding: "2px",
                 }}
               >
-                reward
-              </span>
-              ,
-              <span
-                style={{
-                  backgroundColor: "#f0ead6",
-                  borderRadius: "10%",
-                  padding: "2px",
-                }}
-              >
-                speed
-              </span>
-              , and
-              <span
-                style={{
-                  backgroundColor: "#f0ead6",
-                  borderRadius: "10%",
-                  padding: "2px",
-                }}
-              >
-                all_wheels_on_track
+                Set Reward to 
               </span>
             </p>
-            We will talk about them in detail in further steps.
           </li>
           <li>
-            Check if these variables are declared properly by clicking on Show
-            Code button.
+            You can also click on the little question icon on each block to check explanation.
+            Also, feel free to right click on a block and click on help and look at official documentation.  
           </li>
         </ul>
         You can do this by selecting the selecting the <b>Reward</b> section for
-        reward function, and using the <b>Initializers</b> section to declare
-        rest of the two variables.
+        setting the reward value.
         <br />
         You can follow the video below:
       </Typography>

@@ -13,6 +13,7 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useRef, useState } from "react";
 import ReactConfetti from "react-confetti";
+import { Link } from "react-router-dom";
 // import Confetti from "react-confetti/dist/types/Confetti";
 
 const Finish = ({ handleReset, tutorial }) => {
@@ -197,12 +198,12 @@ const Finish = ({ handleReset, tutorial }) => {
         <DialogTitle ref={dialogRef} sx={{ width: '100%' }}>Congratualations on finishing {tutorial}</DialogTitle>
         <DialogContent>
             <DialogContentText>
-            You can now move to next tutorial or go to FreePlay section 
+            You can now move to <Link to='/tutorial2'>next tutorial</Link> or go to FreePlay section 
             to try out your own reward function.
             </DialogContentText>
         </DialogContent>
-        {console.log(dialogRef.current && dialogRef.current.clientWidth)}
-        <ReactConfetti opacity={0.3} width={dialogRef.current && dialogRef.current.clientWidth} height={dialogRef.current && dialogRef.current.clientHeight + 55 + 'px'} />
+        {/* {console.log(dialogRef.current && dialogRef.current.clientWidth)} */}
+        {/* <ReactConfetti opacity={0.3} width={dialogRef.current && dialogRef.current.clientWidth} height={dialogRef.current && dialogRef.current.clientHeight + 55 + 'px'} /> */}
       </Dialog>
       
     </div>

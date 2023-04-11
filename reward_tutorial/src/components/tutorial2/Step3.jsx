@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import vid from '../../assets/videos/tut2_step3.mov';
+import vid from '../../assets/videos/tut2_step3.mp4';
 
 const Step3 = () => {
   return (
@@ -13,9 +13,9 @@ const Step3 = () => {
         We need to assign a reward based on the distance the car is from the
         center of the track. So, we can use the if-else statements to determine
         which marker we will use. <br />
-        The gist is, if We provide a reward of 1 for staying in the narrow band,
-        0.5 for staying in the medium band, and 0.1 for staying in the wide
-        band. If we decrease the reward for the narrow band, or increase the
+        The gist is, if We provide a reward of 1 for staying in the narrow band (10%),
+        0.5 for staying in the medium band (25%), and 0.1 for staying in the wide
+        band (50%). If we decrease the reward for the narrow band, or increase the
         reward for the medium band, we are essentially incentivizing the car to
         be use a larger portion of the track surface. This could come in handy,
         especially when there are sharp corners. <br />

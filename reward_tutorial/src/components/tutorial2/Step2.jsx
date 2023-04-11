@@ -9,7 +9,8 @@ const Step2 = () => {
                 Up till now, we were only using the all_wheels_on_track on track to determine 
                 whether the car is on track or not. But, we can use the distance_from_center 
                 and gradually decrease the reward as the car moves away from the center. 
-                This will ensure that the car stays near the center of road, as much as possible.<br />
+                This will ensure that the car stays near the center of road, as much as possible.
+                This will prevent the zig-zag movement of the car, which was prominent during Tutorial 1.<br />
                 We can do this, by assigning a reward of 1.0 if the car is at the center of the track, 
                 a penalty of 0.5 if the car is at the edge of the track and a penalty of 0.25 if the 
                 car is in between the center and the edge. <br />

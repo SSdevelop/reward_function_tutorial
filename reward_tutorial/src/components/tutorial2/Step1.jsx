@@ -46,13 +46,9 @@ const Step1 = () => {
         as well. <br />
         So, go ahead and add the blocks you already learned in Tutorial 1.{" "}
         <br />
-        Also, as you learned in Tutorial 1, declaring the other three required
-        variables by dragging them from the Initializers tab and placing them
-        below the Initialize speed block and above the check if all wheels are
-        on track block. <br />
-        You code should look like this after completing step 1.
+        Your code should look like this after completing step 1.
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <img src={codeImg} alt="acceptable code" />
+          <img src={codeImg} alt="acceptable code" width='90%' />
         </div>
       </Typography>
     </Box>

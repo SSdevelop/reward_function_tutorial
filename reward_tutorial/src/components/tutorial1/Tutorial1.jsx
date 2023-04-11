@@ -38,12 +38,12 @@ const Tutorial1 = () => {
     if (activeStep === 0) {
       if (
         !(
-          blocks.includes("reward") &&
-          blocks.includes("all_wheels_on_track_init") &&
-          blocks.includes("speed_init")
+          blocks.includes("reward")
+          // blocks.includes("all_wheels_on_track_init") &&
+          // blocks.includes("speed_init")
         )
       ) {
-        setError(prev => "Please declare all the variables first.");
+        setError(prev => "Please place the 'set reward to' block inside the reward function.");
         setOpen(prev => true);
         return;
       }

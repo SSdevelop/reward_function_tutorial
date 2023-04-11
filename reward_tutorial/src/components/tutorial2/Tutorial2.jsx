@@ -8,7 +8,7 @@ import { Alert, Box, Button, Snackbar, Step, StepLabel, Stepper } from "@mui/mat
 import { getBlocks } from "../../assets/customblocks";
 import Step5 from "./Step5";
 
-const steps = ["Step1", "Step2", "Step3", "Step4", "Step5"];
+const steps = ["Towards improvements", "Preventing Zig-Zag", "Utiizaing the Markers", "Steering Angle Check", "Deploy on AWS"];
 
 const Tutorial2 = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -26,16 +26,16 @@ const Tutorial2 = () => {
         if (
             !(
               blocks.includes("reward") &&
-              blocks.includes("all_wheels_on_track_init") &&
-              blocks.includes("speed_init") &&
+              // blocks.includes("all_wheels_on_track_init") &&
+              // blocks.includes("speed_init") &&
               blocks.includes("wheels_on_track_check") &&
-              blocks.includes("check_speed") &&
-              blocks.includes("distance_from_center_init") &&
-              blocks.includes("steering_angle_init") &&
-              blocks.includes("track_width_init")
+              blocks.includes("check_speed")
+              // blocks.includes("distance_from_center_init") &&
+              // blocks.includes("steering_angle_init") &&
+              // blocks.includes("track_width_init")
             )
           ) {
-            setError(prev => "Please declare all the variables first.");
+            setError(prev => "Please add all the required blocks first.");
             setOpen(prev => true);
             return;
           }
